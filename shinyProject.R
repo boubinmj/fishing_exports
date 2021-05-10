@@ -17,13 +17,6 @@ fish_data <-
   read.csv("FISH_FLD_19022021172720481.csv", header = TRUE)
 head(fish_data)
 
-# fish_data2 <- fish_data %>%
-#   filter(., Measure == "Tonnes") %>%
-#   select(.,Country, Year, Species, Value) %>%
-#   spread(Year, Value) %>%
-#   mutate_if(is.numeric , replace_na, replace = 0)
-# head(fish_data2)
-
 # Generate totals per country, per year
 
 by_years <- fish_data %>%
@@ -57,53 +50,12 @@ by_Belgium <- fish_data %>%
   mutate_if(is.numeric, replace_na, replace = 0)
 head(by_Belgium)
 
-# countries <- unique(df[,2])
-# fish <- unique(df[,4])
 
 countries <- distinct(fish_data %>% select(., Country))
 species <- distinct(fish_data %>% select(., Species))
 years_a <- distinct(fish_data %>% select(., Year))
 
-# belgium <- filter(fish_data, Country == "Belgium")
-#
-# tonnes <- filter(belgium, Measure == "Tonnes")
-#
-# tonnes %>% summarise(., total = sum(Value))
 
-# fish_data_tonnes <- fish_data %>%
-#   filter(., Measure == "Tonnes") %>%
-#   summarise(., total = sum(Value)) %>%
-#   spread(.,Year, Value)
-# head(fish_data_tonnes)
-#
-# tots <- c()
-#
-# by_year <- group_by(fish_data, Year, Country)
-# count_by_year = summarise(by_year, count=sum(Value))
-#
-# new <- fish_data %>%
-#   group_by(., Country, Year) %>%
-#   summarise(., total=sum(Value)) %>%
-#   filter(., Year == 2003)
-#
-# per_year <- c()
-#
-# for(x in 1:length(years[,1])){
-#
-#   per_year[x] <- new$total
-# }
-#
-#
-# for(i in 1:length(countries[,1])) {
-#   nat <- filter(fish_data, Country == countries[i,])
-#   tonnes <- filter(nat, Measure == "Tonnes")
-#   years <- filter(tonnes, Year == 2007)
-#   total <- summarise(years, total = sum(Value))
-#   tots[i] <- total[,1]
-# }
-#
-# export_totals <- data.frame(countries, tots)
-# choice <- years
 
 ui <- dashboardPage(
   dashboardHeader(title = 'This is a Dashboard'),
@@ -122,22 +74,11 @@ ui <- dashboardPage(
                tabName = "bel",
                icon = icon('cog'))
     )
-    # selectizeInput("selected",
-    #                "Select Item to Display",
-    #                years_a)
-    # selectizeInput("selected",
-    #                "Select Item to Display", q
-    #                species)
     
   ),
   dashboardBody(tabItems(
     tabItem(
       tabName = "map",
-      
-      # fluidRow(infoBoxOutput("maxBox"),
-      #          infoBoxOutput("minBox"),
-      #          infoBoxOutput("avgBox")),
-      
       fluidRow(box(
         htmlOutput("map"), height = 500, width = 500
       )),
@@ -196,9 +137,6 @@ server <- function(input, output) {
       input$selected,
       options = list(
         region = "world",
-        
-        # displayMode="regions",
-        # resolution="provinces"
         width = "auto",
         height = "auto"
       )
@@ -241,28 +179,6 @@ server <- function(input, output) {
   })
   
   output$scatter <- renderGvis(gvisLineChart(by_Belgium))
-  
-  #output$scatter <- renderGvis(gvisScatterChart(by_Belgium))
-  
-  # output$maxBox <- renderInfoBox({
-  #   max_value <- max(export_totals[,input$selected])
-  #   max_state <-
-  #     state_stat$state.name[state_stat[,input$selected]==max_value]
-  #   infoBox(max_state, max_value, icon = icon("hand-o-up"))
-  # })
-  #
-  # output$minBox <- renderInfoBox({
-  #   min_value <- min(export_totals[,input$selected])
-  #   min_state <-
-  #     state_stat$state.name[state_stat[,input$selected]==min_value]
-  #   infoBox(min_state, min_value, icon = icon("hand-o-down"))
-  # })
-  #
-  # output$avgBox <- renderInfoBox(
-  #   infoBox(paste("AVG", input$selected),
-  #           mean(state_stat[,input$selected]),
-  #           icon = icon("calculator"), fill = TRUE)
-  # )
   
 }
 
