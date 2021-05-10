@@ -7,50 +7,10 @@ library('googleVis')
 library('reshape2')
 library('tidyr')
 
-##############################################
-#################### GLOBAL ##################
-##############################################
+by_years = read.csv('DATA/by_years.csv', header = TRUE)
+by_species = read.csv('DATA/by_species.csv', header = TRUE)
+by_Norway = read.csv('DATA/by_norway.csv', header = TRUE)
 
-# Import Data Set
-
-fish_data <-
-  read.csv("FISH_FLD_19022021172720481.csv", header = TRUE)
-head(fish_data)
-
-# Generate totals per country, per year
-
-by_years <- fish_data %>%
-  filter(., Measure == "Tonnes") %>%
-  select(., Country, Year, Value) %>%
-  group_by(., Country) %>%
-  group_by(., Year, .add = TRUE) %>%
-  summarise(., total_yr = sum(Value)) %>%
-  spread(Year, total_yr) %>%
-  mutate_if(is.numeric , replace_na, replace = 0)
-head(by_years)
-
-# generate totals per country, per species
-
-by_species <- fish_data %>%
-  filter(., Measure == "Tonnes") %>%
-  select(., Country, Species, Value) %>%
-  group_by(., Country) %>%
-  group_by(., Species, .add = TRUE) %>%
-  summarise(., total_sp = sum(Value)) %>%
-  spread(Species, total_sp) %>%
-  mutate_if(is.numeric, replace_na, replace = 0)
-head(by_species)
-
-by_Belgium <- fish_data %>%
-  filter(., Country == "Norway") %>%
-  filter(., Measure == "Tonnes") %>%
-  select(.,Species,Year, Value) %>% 
-  group_by(., Species) %>% 
-  spread(Species, Value) %>% 
-  mutate_if(is.numeric, replace_na, replace = 0)
-head(by_Belgium)
-
-
-countries <- distinct(fish_data %>% select(., Country))
-species <- distinct(fish_data %>% select(., Species))
-years_a <- distinct(fish_data %>% select(., Year))
+countries <- distinct(by_years %>% select(., Country))
+species <- distinct(by_years %>% select(., Species))
+years_a <- distinct(by_species %>% select(., Year))
