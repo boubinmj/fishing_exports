@@ -11,8 +11,8 @@ ui <- dashboardPage(
         tabName = "spec-data",
         icon = icon("database")
       ),
-      menuItem("Belgium",
-               tabName = "bel",
+      menuItem("Norway",
+               tabName = "nor",
                icon = icon('cog'))
     )
     
@@ -56,7 +56,7 @@ ui <- dashboardPage(
             fluidRow(box(
               DT::dataTableOutput("dataTable")
             ))),
-    tabItem(tabName = "bel",
+    tabItem(tabName = "nor",
             fluidRow(box(
               htmlOutput("scatter"), height=500, width=500
             )),

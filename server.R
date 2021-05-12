@@ -47,7 +47,7 @@ server <- function(input, output) {
                   fontWeight = "bold")
   })
   
-  output$scatter <- renderGvis(gvisLineChart(by_Belgium))
+  output$scatter <- renderGvis(gvisLineChart(by_Norway))
   
 }
 
