@@ -58,7 +58,7 @@ ui <- dashboardPage(
             ))),
     tabItem(tabName = "nor",
             fluidRow(box(
-              htmlOutput("scatter"), height=500, width=500
+              htmlOutput("scatter"), height=300, width=500
             )),
             fluidRow(fluidRow(
               wellPanel(
