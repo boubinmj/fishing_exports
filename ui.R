@@ -24,7 +24,7 @@ ui <- dashboardPage(
         htmlOutput("map"), height = 500, width = 500
       )),
       fluidRow(box(
-        htmlOutput("hist"), height = 500, width = 500
+        htmlOutput("hist"), height = 300, width = 500
       )),
       fluidRow(wellPanel(
         selectizeInput("selected",
@@ -42,7 +42,7 @@ ui <- dashboardPage(
               htmlOutput("specGraph"), height = 500, width = 500
             )),
             fluidRow(box(
-              htmlOutput("specHist"), height = 500, width = 500
+              htmlOutput("specHist"), height = 300, width = 500
             )),
             fluidRow(fluidRow(
               wellPanel(
